@@ -1,0 +1,333 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+{#    #页码样式定位#}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+{% endblock %}
+
+
+#全屏时头
+{% block write_blog %}
+    {% if user_tag == 1 %}
+{#        <li><a href="#" style="color: #00BDEF">慢生活</a>#}
+
+        </li>
+        <li><a href="#" style="color: #00BDEF">心得笔记</a></li>
+    {% elif user_tag == 2 and is_login %}
+        <li><a href="{% url 'blog:rtfedit' %}" style="color: #00BDEF">写博客</a>
+            <ul class="sub-nav">
+                <li><a href="life.html">日记</a></li>
+                <li><a href="life.html">欣赏</a></li>
+                <li><a href="life.html">程序人生</a></li>
+                <li><a href="life.html">经典语录</a></li>
+            </ul>
+        </li>
+        <li><a href="{% url 'blog:houtai' %}" style="color: #00BDEF">后台管理</a></li>
+    {% else %}
+        <li><a href="{% url 'blog:rtfedit' %}" style="color: #00BDEF">慢生活</a>
+
+        </li>
+
+    {% endif %}
+{% endblock %}
+
+
+#缩小时下拉
+{% block write_blog2 %}
+    {% if user_tag == 1 %}
+
+    {% elif user_tag == 2 and is_login %}
+        <dt class="list_dt"><a href="{% url 'blog:rtfedit' %}" >写博客</a></dt>
+            <dd class="list_dd">
+
+            </dd>
+        <dt class="list_dt"><a href="{% url 'blog:houtai' %}" >后台管理</a></dt>
+
+    {% endif %}
+{% endblock %}
+
+
+
+
+
+{% block username %}
+        {% if not is_login %}
+            <div class="navbar-header" >
+                <h1 class="logo"><a href="http://www.yangqq.com">想看更多请先登录！</a></h1>
+            </div>
+        {% else %}
+            <div class="navbar-header" >
+                <h1 class="logo"><a href="http://www.yangqq.com">{{ username }}</a><a class="logo" href="{% url 'blog:loginout' %}">退出！</a></h1>
+            </div>
+        {% endif %}
+{% endblock %}
+
+{% block username1 %}
+        {% if not is_login %}
+            <div class="navbar-header" style="width: 96%; margin-left: 2%">
+                <h2><a href="http://www.yangqq.com" class="mlogo">想看更多请先登录！</a><span class="navicon" ></span></h2>
+            </div>
+        {% else %}
+            <div class="navbar-header" style="width: 96%; margin-left: 2%">
+                <h2 style="width: 100%"><a href="http://www.yangqq.com" class="mlogo">{{ username }}</a><a class="mlogo" href="{% url 'blog:loginout' %}">退出！</a><span class="navicon"></span></h2>
+
+            </div>
+        {% endif %}
+{% endblock %}
+
+
+{% block index %}
+    <article>
+        <!--banner begin-->
+        <div class="picsbox">
+            <div class="banner">
+                <div id="banner" class="fader">
+                    <li class="slide"><a href="/" target="_blank"><img src="{% static 'images/i1.jpg' %}"><span
+                            class="imginfo">加拿大的美</span></a></li>
+                    <li class="slide"><a href="/" target="_blank"><img src="{% static 'images/i2.jpg' %}"><span
+                            class="imginfo">人间美味</span></a></li>
+                    <li class="slide"><a href="/" target="_blank"><img src="{% static 'images/i3.jpg' %}"><span
+                            class="imginfo">尼亚加拉瀑布</span></a></li>
+                    <div class="fader_controls">
+                        <div class="page prev" data-target="prev">&lsaquo;</div>
+                        <div class="page next" data-target="next">&rsaquo;</div>
+                        <ul class="pager_list">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--banner end-->
+            <div class="toppic">
+                <li><a href="/" target="_blank"> <i><img src="{% static 'images/c1.jpg' %}"></i>
+                    <h2>城市的喧嚣！</h2>
+                    <span></span> </a></li>
+                <li><a href="/" target="_blank"> <i><img src="{% static 'images/c2.jpg' %}"></i>
+                    <h2>大自然的壮阔！</h2>
+                    <span></span> </a></li>
+            </div>
+        </div>
+        <div class="blank"></div>
+
+        <!--blogsbox begin-->
+        <div class="blogsbox">
+
+            {% if is_login %}
+                {% for top in top_article %}
+                    <div class="blogs" data-scroll-reveal="enter bottom over 1s">
+                        <h3 class="blogtitle"><a href="/" target="_blank" style="color: #00BDEF">{{ top.title }}</a><a
+                                href="{% url 'blog:gbook' top.id %}" style="font-size: 12px">»阅读全文 [置顶]</a></h3>
+                        {#          <span class="blogpic"><a href="/" title=""><img src="{{ art.image }}" alt=""></a></span>#}
+                        <p class="blogtext">{{ top.intro | safe }} </p>
+                        <div class="bloginfo">
+                            <ul>
+                                <li class="author"><a href="/">张超</a></li>
+                                <li class="lmname" blog_id="{{ top.id }}">学无止境</li>
+                                <li class="timer">{{ top.show_time }}</li>
+                                <li class="view"><span>{{ top.like_num }}</span>已阅读</li>
+                                {#              <li class="like">9999</li>#}
+                            </ul>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                {% for bog in one_page %}
+                    <div class="blogs" data-scroll-reveal="enter bottom over 1s">
+                        <h3 class="blogtitle"><a href="/" target="_blank" style="color: #00BDEF">{{ bog.title }}</a><a
+                                href="{% url 'blog:gbook' bog.id %}" style="font-size: 12px">»阅读全文</a></h3>
+                        {#          <span class="blogpic"><a href="/" title=""><img src="{{ art.image }}" alt=""></a></span>#}
+                        <p class="blogtext">{{ bog.intro | safe }} </p>
+                        <div class="bloginfo">
+                            <ul>
+                                <li class="author"><a href="/">张超</a></li>
+                                <li class="lmname" blog_id="{{ bog.id }}">学无止境</li>
+                                <li class="timer">{{ bog.show_time }}</li>
+                                <li class="view"><span>{{ bog.like_num }}</span>已阅读</li>
+                                {#              <li class="like">9999</li>#}
+                            </ul>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                {% for art in one_info %}
+                    <div class="blogs" data-scroll-reveal="enter bottom over 1s">
+                        <h3 class="blogtitle"><a href="/" target="_blank">{{ art.title }}</a></h3>
+                        <span class="blogpic"><a href="/" title=""><img src="{{ art.image }}" alt=""></a></span>
+                        <p class="blogtext">如图，要实现上图效果，我采用如下方法：1、首先在数据库模型，增加字段，分别是图片2，图片3。2、增加标签模板，用if，else if
+                            来判断，输出。思路已打开，样式调用就可以多样化啦！... </p>
+                        <div class="bloginfo">
+                            <ul>
+                                <li class="author"><a href="/">张超</a></li>
+                                <li class="lmname" blog_id="{{ art.id }}">学无止境</li>
+                                <li class="timer">{{ art.publish_time }}</li>
+                                <li class="view"><span>{{ art.like_num }}</span>已阅读</li>
+                                {#              <li class="like">9999</li>#}
+                            </ul>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+
+            <div class="blogs" data-scroll-reveal="enter bottom over 1s">
+                <h3 class="blogtitle"><a href="/" target="_blank">站在他人的视角领略不同的世界风采！</a></h3>
+                <p class="blogtext">如图，要实现上图效果，我采用如下方法：1、首先在数据库模型，增加字段，分别是图片2，图片3。2、增加标签模板，用if，else if
+                    来判断，输出。思路已打开，样式调用就可以多样化啦！...</p>
+                <div class="bloginfo">
+                    <ul>
+                        <li class="author"><a href="/">张超</a></li>
+                        <li class="lmname"><a href="/">学无止境</a></li>
+                        <li class="timer">2018-5-13</li>
+                        <li class="view">4567已阅读</li>
+                        <li class="like">9999</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <!--blogsbox end-->
+
+        <div class="sidebar" style="margin-left: auto;width: 300px">
+            <div class="zhuanti">
+                <h2 class="hometitle">特别推荐</h2>
+                <ul>
+                    <li><i><img src="{% static 'images/tooopen0.jpg' %}"></i>
+                        <p>人物写真 <span><a href="/">阅读</a></span></p>
+                    </li>
+                    {#        <li> <i><img src="{% static 'images/b04.jpg' %}"></i>#}
+                    {#          <p>5.20 我想对你说 <span><a href="/">阅读</a></span></p>#}
+                    {#        </li>#}
+                    <li><i><img src="{% static 'images/b05.jpg' %}"></i>
+                        <p>个人博客，属于我的小世界！ <span><a href="/">阅读</a></span></p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="tuijian">
+                <h2 class="hometitle">文章排行</h2>
+                <ul class="tjpic">
+                    <i><img src="{% static 'images/tooo6.jpg' %}"></i>
+                    <p><a href="/">你想看的都在这里！</a></p>
+                </ul>
+                <ul class="sidenews">
+
+                    {% for m in article_list %}
+                        <li>
+
+                            <i class="glyphicon glyphicon-heart-empty"
+                               style=" width: 40px;height: 30px; color: red; size: landscape">☆</i>
+                            <p><a href="{% url 'blog:gbook' m.id %}">{{ m.title }}</a></p>
+                            <span>{{ m.like_num }}已阅读&nbsp&nbsp&nbsp&nbsp&nbsp{{ m.talk_num }}评论</span></li>
+
+                    {% endfor %}
+
+                    {#        <li> <i><img src="{% static 'images/toppic02.jpg' %}"></i>#}
+                    {#          <p><a href="/">给我模板PSD源文件，我给你设计HTML！</a></p>#}
+                    {#          <span>2018-05-13</span> </li>#}
+                </ul>
+            </div>
+            <div class="cloud">
+                <h2 class="hometitle">文章分类</h2>
+                <ul>
+{#                    <a href="/">陌上花开</a> <a href="/">校园生活</a> <a href="/">html5</a> <a href="/">SumSung</a> <a href="/">青春</a>#}
+                    {% for kj in kinds %}
+                    <a href="{% url 'blog:fenlei' kj.kind_name  %}">{{ kj.kind_name }}</a>
+                    {% endfor %}
+{#                    <a href="{% url 'blog:fenlei' '诗歌' %}">诗歌</a> <a href="{% url 'blog:fenlei' '日记' %}">日记</a><a href="{% url 'blog:fenlei' '叙事' %}">叙事</a> <a href="{% url 'blog:fenlei' '摘抄' %}">摘抄</a>#}
+{#                    <a href="/">三星</a> <a href="/">索尼</a>#}
+                </ul>
+            </div>
+
+            <div class="guanzhu" id="follow-us">
+                <h2 class="hometitle">关注我们 么么哒！</h2>
+                <ul>
+                    <li class="sina"><a href="/" target="_blank"><span>新浪微博</span>张超博客</a></li>
+                    <li class="tencent"><a href="/" target="_blank"><span>腾讯微博</span>张超博客</a></li>
+                    <li class="qq"><a href="/" target="_blank"><span>QQ号</span>476847113</a></li>
+                    <li class="email"><a href="/" target="_blank"><span>邮箱帐号</span>dancesmiling@qq.com</a></li>
+                    <li class="wxgzh"><a href="/" target="_blank"><span>微信号</span>yangqq_1987</a></li>
+                    {#        <li class="wx"><img src="{% static 'images/wx.jpg' %}"></li>#}
+                </ul>
+            </div>
+        </div>
+    </article>
+
+
+
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-5">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        {% if page.has_previous %}
+                            <li>
+                                <a href="{% url 'blog:index1' page.number|add:'-1' %}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="disabled">
+                            <span href="{% url 'blog:index1' page.number|add:'-1' %}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </span>
+                            </li>
+
+                        {% endif %}
+                        {% for num in pagerange %}
+                            {% ifequal num page.number %}
+                                <li class="active"><a href="{% url 'blog:index1' num %}">{{ num }}</a></li>
+                            {% else %}
+                                <li><a href="{% url 'blog:index1' num %}">{{ num }}</a></li>
+                            {% endifequal %}
+
+                        {% endfor %}
+                        {% if page.has_next %}
+                            <li>
+                                <a href="{% url 'blog:index1' page.number|add:'1' %}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="disabled">
+                                <span href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+
+            </div>
+
+
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+
+
+
+
+
+
+
+
+
+    <footer>
+        <p>Design by <a href="http://www.yangqq.com" target="_blank">张超个人博客</a> <a href="/">蜀ICP备11002373号-1</a></p>
+    </footer>
+    <a href="#" class="cd-top">Top</a>
+{% endblock %}
+
+
+

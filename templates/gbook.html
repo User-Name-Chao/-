@@ -1,0 +1,86 @@
+
+
+
+{% extends 'base.html' %}
+{% load static %}
+{% block gbook %}
+    <div class="pagebg ab"></div>
+    <div class="container">
+        <h1 class="t_nav"><span>你，我生命中一个重要的过客，我们之所以是过客，因为你未曾会为我停留。</span><a href="{% url 'blog:index' %}" class="n1">网站首页</a><a
+                href="/" class="n2">留言</a></h1>
+        <div class="news_infos" style="padding: 50px">
+
+            <div><h2 style="color: #12aae8">{{ title }}</h2></div>
+            <div class="bloginfo">
+                <ul>
+                    <li class="author"><a href="/">张先生</a></li>
+                    <li class="timer">{{ show_time }}</li>
+                    <li class="view">{{ read_num }}</li>
+                    {#                <li class="like">888</li>#}
+                </ul>
+            </div>
+
+            <div>{{ content | safe }}</div>
+
+            <div class="bloginfo">
+                <h3>评 论</h3>
+            {% ifequal fbid_talk 0 %}
+                <div style="width: 400px;height: 200px;border: black 1px solid">
+                    {% for b in talks %}
+                        <div style="border: #8F44AD solid 2px;">
+                            <span>{{ b.talk_user_name }}:</span>
+                            <span>{{ b.talk_content }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <form action="{% url 'blog:show_talk' blok_id %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="text" name="talk" placeholder="请畅所欲言！" style="width: 280px;height: 60px">
+
+                    <button class="btn btn-primary" type="submit">发表评论</button>
+                </form>
+            {% else %}
+                <div style="width: 300px;height: 100px;border: black 1px solid">
+                您已被禁止评论，如有疑问请联系管理员！
+                </div>
+            {% endifequal %}
+
+            </div>
+        </div>
+
+        <div class="sidebar" style="margin-left: auto;width: 200px">
+            <div class="about">
+                <p class="avatar"><img
+                        src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543749348&di=c2819bf212264287c70ddc0b7ad9c7a3&imgtype=jpg&er=1&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F3b292df5e0fe992532fd5c7e3fa85edf8db1712e.jpg"
+                        alt=""></p>
+                <p class="abname">dancesmile | 张超</p>
+                <p class="abposition">Python开发工程师</p>
+                <p class="abtext" style="text-align: center">一个90后IT程序猿！ </p>
+            </div>
+            <div class="weixin">
+                <h2 class="hometitle">微信关注</h2>
+                <ul>
+                    <img src="{% static 'images/wx.jpg' %}">
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+{#    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>#}
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+
+    <footer>
+        <p>Design by <a href="http://www.yangqq.com" target="_blank">张先生个人博客</a> <a href="/">蜀ICP备11002373号-1</a></p>
+    </footer>
+    <a href="#" class="cd-top">Top</a>
+{% endblock %}
+
+
+
+
+

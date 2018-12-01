@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <script src="{% static 'js/jquery.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/bootstrap.js' %}" type="text/javascript"></script>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-theme.css' %}" rel="stylesheet" type="text/css">
+
+    <link href="{% static 'css/swiper.css' %}" rel="stylesheet " type="text/css">
+    <script src="{% static 'js/swiper.js' %}" type="text/javascript"></script>
+    <link href="{% static 'css/reset.css' %}" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        .form-info {
+            border: 1px solid orange;
+            margin: 100px auto;
+            width: 50%;
+            padding: 50px;
+        }
+
+        .form-info h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .form-info .submit {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="form-info">
+        <h3><a href="{% url 'blog:index' %}">首页</a></h3>
+        <h2>新用户注册</h2>
+        <form action="{% url 'blog:regist' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="exampleInputEmail1">用户名</label>
+                <input name="username" class="form-control" id="exampleInputEmail1" type="text" placeholder="请输入用户名">
+{#                <p class="help-block">请输入用户名</p>#}
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">密码</label>
+                <input name="password" class="form-control" type="password" placeholder="请输入密码">
+{#                <p class="help-block">请输入英文字母数字组合密码</p>#}
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">确认密码</label>
+                <input class="form-control" type="password" placeholder="请再次输入密码">
+{#                <p class="help-block">请再次输入英文字母数字组合密码</p>#}
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">邮箱</label>
+                <input name="email" class="form-control" type="password" placeholder="请再次输入邮箱">
+{#                <p class="help-block">请输入邮箱帐号</p>#}
+            </div>
+            <div class="form-group">
+                <label for="exampleInputFile">头像</label>
+                <input name="icon" id="exampleInputFile" type="file">
+
+            </div>
+            <div class="submit">
+                <button class="btn btn-primary" type="submit">注册</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>

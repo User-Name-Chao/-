@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <script src="js/jquery.js" type="text/javascript"></script>
+    <script src="js/bootstrap.js" type="text/javascript"></script>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css">
+
+    <link href="css/swiper.css" rel="stylesheet" type="text/css">
+    <script src="js/swiper.js" type="text/javascript"></script>
+    <link href="css/reset.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        .form-info {
+            border: 1px solid orange;
+            margin: 100px auto;
+            width: 30%;
+            padding: 50px;
+        }
+
+        .form-info h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .form-info .submit {
+            text-align: center;
+            margin-bottom: 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="form-info">
+        <h3><a href="{% url 'blog:index' %}">首页</a></h3>
+        <h2>用户登陆</h2>
+
+        <form method="post" action="{% url 'blog:login' %}" onsubmit="return check_input()">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="exampleInputEmail1">用户名</label>
+                <input name="username" class="form-control" id="exampleInputEmail1" type="text" placeholder="请输入用户名">
+{#                <p class="help-block">请输入用户名</p>#}
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">密&nbsp&nbsp&nbsp&nbsp码</label>
+                <input name="password" class="form-control" type="password" placeholder="请输入密码">
+{#                <p class="help-block">请输入字母数字组合密码</p>#}
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">验证码</label>
+                <input name="code" class="form-control" type="password" placeholder="请输入验证码">
+                <img src="{% url 'blog:vcode' %}" onclick="this.src='{% url 'blog:vcode' %}?'+Math.random()">
+{#                <p class="help-block">请输入验证码</p>#}
+            </div>
+
+{#            <div class="form-group">#}
+{#                <label for="exampleInputPassword1">短信验证码</label>#}
+{#                <input name="duanxin" class="form-control" type="password" placeholder="请输入短信验证码">#}
+{#                <p class="help-block">请输入短信验证码</p>#}
+{#            </div>#}
+
+            <div class="submit">
+                <button class="btn btn-primary" type="submit">登陆</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>

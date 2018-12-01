@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>富文本编辑器</title>
+    <script src="/static/tiny_mce/tiny_mce.js"></script>
+    <script>
+        tinyMCE.init({
+            'mode':'textareas',
+            'width':800,
+            'height':600,
+        })
+    </script>
+</head>
+<body>
+<div style="margin-left: 20%">
+    <form action="{% url 'blog:alter_blog' bl_id %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    标题：<input type="text" name="title" value="{{ blogs.title }}" >
+    简介：<input type="text" name="intro" {{ blogs.intro }}>
+    <textarea name="content">{{ blogs.content }}</textarea>
+    <input type="submit" value="修改博客">
+    </form>
+</div>
+
+</body>
+</html>
