@@ -24,7 +24,8 @@ urlpatterns = [
     #富文本
     url(r'^rtfedit/', views.rtfedit, name='rtfedit'),
     url(r'^save/', views.save, name='save'),
-    url(r'^showboke/', views.showboke, name='showboke'),
+    url(r'^showboke/$', views.showboke, name='showboke'),
+    url(r'^showboke/(\d*)/$',views.showboke,name='showboke1'),
 
     #邮件激活
     url(r'^active/', views.active, name='active'),
@@ -49,9 +50,12 @@ urlpatterns = [
     url(r'^alter_blog/(\d+)/$', views.alter_blog, name='alter_blog'),
 
     #搜索
-    url(r'^search/', views.search, name='search'),
+    url(r'^search/$', views.search, name='search'),
+    url(r'^search/([\w.]+)/(\d+)/$', views.search, name='search1'),
+
 
     #草稿箱
+    url(r'^draft/$', views.draft,name='draft'),
     url(r'^ca_push/(\d+)/$', views.ca_push,name='ca_push'),
     url(r'^delete_cao/(\d+)/$', views.delete_cao,name='delete_cao'),
 
@@ -80,11 +84,19 @@ urlpatterns = [
     #文章置顶
     url(r'^zhiding/(\d+)/$', views.zhiding,name='zhiding'),
     #文章分类
-    url(r'^fenlei/(\w+)/$', views.fenlei,name='fenlei'),
+    #目前url暂时设置成这样，可扩展性太差，待修改！
+    url(r'^fenlei/([\w.]+)/$', views.fenlei,name='fenlei'),
+    url(r'^fenlei/([\w.]+)/(\d+)/$', views.fenlei,name='fenlei1'),
+    # url(r'^fenlei/([a-z35.]+)/(\d+)/$', views.fenlei,name='fenlei1'),
     #添加分类
     url(r'^add_kind/', views.add_kind,name='add_kind'),
     #修改分类
     url(r'^alter_kind/(\d+)/$', views.alter_kind,name='alter_kind'),
 
+    #收藏
+    url(r'^collects/', views.collects,name='collects'),
+    url(r'^cancel_collect/', views.cancel_collect,name='cancel_collect'),
+
+    url(r'^personal/', views.personal,name='personal'),
 
 ]

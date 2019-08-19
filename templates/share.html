@@ -10,64 +10,80 @@
 
         <div class="share">
             <ul>
-                {% for kn in kind_num %}
+                {% for kn in one_info %}
                     <li>
-                        <div class="shareli"><a href="/" target="_blank"> <i><img src="{% static '' %}images/toppic01.jpg"></i>
+                        <div class="shareli"><i><img src="{{ kn.image }}"></i>
                             <h2><b>{{ kn.title }}</b></h2>
                             <h2><a href="{% url 'blog:gbook' kn.id %}" style="font-size: 12px">»阅读全文</a></h2>
-                            <span>喜欢 | {{ kn.like_num }}</span> </a></div>
+                            <span>喜欢 | {{ kn.like_num }}</span></div>
                     </li>
                 {% endfor %}
 
-
-{#                <li>#}
-{#                    <div class="shareli"><a href="/" target="_blank"> <i><img src="{% static '' %}images/toppic02.jpg"></i>#}
-{#                        <h2><b>陌上花开，可缓缓归矣</b></h2>#}
-{#                        <span>喜欢 | 190</span> </a></div>#}
-{#                </li>#}
-{#                <li>#}
-{#                    <div class="shareli"><a href="/" target="_blank"> <i><img src="{% static '' %}images/banner01.jpg"></i>#}
-{#                        <h2><b>网页中图片属性固定宽度，如何用js改变大小</b></h2>#}
-{#                        <span>喜欢 | 190</span> </a></div>#}
-{#                </li>#}
-{#                <li>#}
-{#                    <div class="shareli"><a href="/" target="_blank"> <i><img src="{% static '' %}images/text01.jpg"></i>#}
-{#                        <h2><b>个人博客，属于我的小世界！</b></h2>#}
-{#                        <span>喜欢 | 190</span> </a></div>#}
-{#                </li>#}
-{#                <li>#}
-{#                    <div class="shareli"><a href="/" target="_blank"> <i><img src="{% static '' %}images/text02.jpg"></i>#}
-{#                        <h2><b>html5个人博客模板《黑色格调》</b></h2>#}
-{#                        <span>喜欢 | 190</span> </a></div>#}
-{#                </li>#}
-{#                <li>#}
-{#                    <div class="shareli"><a href="/" target="_blank"> <i><img src="{% static '' %}images/banner02.jpg"></i>#}
-{#                        <h2><b>帝国cms 首页或者列表无图，不使用默认图片的方法</b></h2>#}
-{#                        <span>喜欢 | 190</span> </a></div>#}
-{#                </li>#}
-{#                <li>#}
-{#                    <div class="shareli"><a href="/" target="_blank"> <i><img src="{% static '' %}images/text02.jpg"></i>#}
-{#                        <h2><b>十条设计原则教你学会如何设计网页布局!</b></h2>#}
-{#                        <span>喜欢 | 190</span> </a></div>#}
-{#                </li>#}
-{#                <li>#}
-{#                    <div class="shareli"><a href="/" target="_blank"> <i><img src="{% static '' %}images/banner02.jpg"></i>#}
-{#                        <h2><b>html5个人博客模板主题《清雅》</b></h2>#}
-{#                        <span>喜欢 | 190</span> </a></div>#}
-{#                </li>#}
             </ul>
         </div>
 
-        <div class="pagelist"><a title="Total record">&nbsp;<b>45</b> </a>&nbsp;&nbsp;&nbsp;<b>1</b>&nbsp;<a
-                href="/download/index_2.html">2</a>&nbsp;<a href="/download/index_2.html">下一页</a>&nbsp;<a
-                href="/download/index_2.html">尾页</a></div>
-
+{#        <div class="pagelist"><a title="Total record">&nbsp;<b>45</b> </a>&nbsp;&nbsp;&nbsp;<b>1</b>&nbsp;<a#}
+{#                href="/download/index_2.html">2</a>&nbsp;<a href="/download/index_2.html">下一页</a>&nbsp;<a#}
+{#                href="/download/index_2.html">尾页</a></div>#}
 
     </div>
-    <footer>
-        <p>Design by <a href="http://www.yangqq.com" target="_blank">张超个人博客</a> <a href="/">蜀ICP备11002373号-1</a></p>
-    </footer>
-    <a href="#" class="cd-top">Top</a>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-5">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        {% if page.has_previous %}
+                            <li>
+                                <a href="{% url 'blog:fenlei1' kind page.number|add:'-1' %}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="disabled">
+                            <span href="{% url 'blog:fenlei1' kind page.number|add:'-1' %}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </span>
+                            </li>
+
+                        {% endif %}
+                        {% for num in pagerange %}
+                            {% ifequal num page.number %}
+                                <li class="active"><a href="{% url 'blog:fenlei1' kind num %}">{{ num }}</a></li>
+                            {% else %}
+                                <li><a href="{% url 'blog:fenlei1' kind num %}">{{ num }}</a></li>
+                            {% endifequal %}
+
+                        {% endfor %}
+                        {% if page.has_next %}
+                            <li>
+                                <a href="{% url 'blog:fenlei1' kind page.number|add:'1' %}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="disabled">
+                                <span href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+
+            </div>
+
+
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
 {% endblock %}
 
 

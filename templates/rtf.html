@@ -19,14 +19,22 @@
 {#    {% url 'blog:save' %}#}
     <form name="boke" action="{% url 'blog:save' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    标题：<input type="text" name="title">
-
-    简介：<input type="text" name="intro">
-        <input type="radio" name="kinds" value="散文" >散文
-        <input type="radio" name="kinds" value="诗歌" >诗歌
-        <input type="radio" name="kinds" value="叙事" >叙事
-        <input type="radio" name="kinds" value="日记" >日记
-        <input type="radio" name="kinds" value="摘抄" >摘抄
+    标题：<input type="text" name="title" autocomplete="off">
+        <br>
+    简介：<input type="text" name="intro" autocomplete="off">
+        <br>
+        <input type="radio" name="kinds" value="android" >android
+        <input type="radio" name="kinds" value="c" >c
+        <input type="radio" name="kinds" value="csharp" >csharp
+        <input type="radio" name="kinds" value="css3" >css3
+        <input type="radio" name="kinds" value="html5" >html5
+        <input type="radio" name="kinds" value="ios" >ios
+        <input type="radio" name="kinds" value="java" >java
+        <input type="radio" name="kinds" value="javascript" >javascript
+        <input type="radio" name="kinds" value="linux" >linux
+        <input type="radio" name="kinds" value="node.js" >node.js
+        <input type="radio" name="kinds" value="php" >php
+        <input type="radio" name="kinds" value="python" >python
     <textarea name="content"></textarea>
 
     <input type="submit" name="publish" value="发表博客">

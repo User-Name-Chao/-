@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
+    <meta name=referrer content=never>
 
-    {% block meta %}
-
-    {% endblock %}
-
-<!-- Bootstrap -->
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico'%}">
+    {#    #页码样式定位#}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
     <meta name="keywords" content="个人博客,张超个人博客,个人博客模板,张超"/>
@@ -43,36 +43,50 @@
 
             <li><a href="{% url 'blog:index' %}" style="color: #00BDEF">网站首页</a></li>
             <li><a href="{% url 'blog:about' %}" style="color: #00BDEF">关于我</a></li>
-            <li><a href="{% url 'blog:share' %}" style="color: #00BDEF">学无止境</a>
+
+            <li><a href="{% url 'blog:fenlei' 'html5' %}" style="color: #00BDEF">html5</a></li>
+            <li><a href="{% url 'blog:fenlei' 'python' %}" style="color: #00BDEF">python</a></li>
+            <li><a href="{% url 'blog:fenlei' 'javascript' %}" style="color: #00BDEF">javascript</a>
+
+            <li><a href="{% url 'blog:fenlei' 'android' %}" style="color: #00BDEF">更多分类</a>
                 <ul class="sub-nav">
-                    <li><a href="drafts.html">心得笔记</a></li>
-                    <li><a href="drafts.html">CSS3|Html5</a></li>
-                    <li><a href="drafts.html">网站建设</a></li>
-                    <li><a href="drafts.html">推荐工具</a></li>
-                    <li><a href="drafts.html">JS实例索引</a></li>
+                    {% for kj in kinds %}
+                        <li><a href="{% url 'blog:fenlei' kj.kind_name %}">{{ kj.kind_name }}</a></li>
+                    {% endfor %}
                 </ul>
             </li>
-{#            写博客#}
+            {#            <li><a href="{% url 'blog:fenlei' 'android' %}" style="color: #00BDEF">更多分类</a>#}
+            {#                <ul class="sub-nav">#}
+            {#                    <li><a href="drafts.html">心得笔记</a></li>#}
+            {#                    <li><a href="drafts.html">CSS3|Html5</a></li>#}
+            {#                    <li><a href="drafts.html">网站建设</a></li>#}
+            {#                    <li><a href="drafts.html">推荐工具</a></li>#}
+            {#                    <li><a href="drafts.html">JS实例索引</a></li>#}
+            {#                </ul>#}
+            {#            </li>#}
+            {#            写博客#}
             {% block write_blog %}
 
             {% endblock %}
 
+            {#            登录前后注册登录两个标签是否显示#}
+            {% block login_resgist %}
 
-            <li><a href="{% url 'blog:login' %}" style="color: #00BDEF">登录</a></li>
+            {% endblock %}
 
-            <li><a href="{% url 'blog:regist' %}" style="color: #00BDEF">注册</a></li>
-{#            头像#}
+            {#            头像#}
             {% block icon %}
 
             {% endblock %}
 
         </nav>
         <!--search begin-->
-        <form method="post" action="{% url 'blog:search' %}" onsubmit="return check_input()">
+        <form method="post" action="{% url 'blog:search1' 'search' 1 %}" onsubmit="return check_input()">
             {% csrf_token %}
             <div class="form-group">
 
-                <input style="width: 125px;margin-left: 77%;margin-top: -55px" name="keyboard" type="text"
+                <input autocomplete="off" style="width: 125px;margin-left: 77%;margin-top: -55px" name="keyboard"
+                       type="text"
                        class="form-control" id="exampleInputName2" placeholder="想搜索点什么...">
                 <button class="btn btn-primary" type="submit"
                         style="margin-left: 90%; color: #00BDEF;margin-top: -160px">搜索
@@ -94,34 +108,24 @@
             <dt class="list_dt"><a href="{% url 'blog:index' %}">网站首页</a></dt>
             <dt class="list_dt"><a href="{% url 'blog:about' %}">关于我</a></dt>
 
-            <dt class="list_dt"><a href="{% url 'blog:share' %}">学无止境</a></dt>
+            <dt class="list_dt"><a href="{% url 'blog:fenlei' 'android' %}">更多分类</a></dt>
             <dd class="list_dd">
                 <ul>
-                    <li><a href="drafts.html">心得笔记</a></li>
-{#                    <li><a href="drafts.html">CSS3|Html5</a></li>#}
-                    <li><a href="drafts.html">网站建设</a></li>
-                    <li><a href="drafts.html">推荐工具</a></li>
-                    <li><a href="drafts.html">JS实例索引</a></li>
+                    {#                    <li><a href="drafts.html">心得笔记</a></li>#}
+                    {#                    <li><a href="drafts.html">CSS3|Html5</a></li>#}
+                    {#                    <li><a href="drafts.html">网站建设</a></li>#}
+                    {#                    <li><a href="drafts.html">推荐工具</a></li>#}
+                    {#                    <li><a href="drafts.html">JS实例索引</a></li>#}
                 </ul>
             </dd>
 
             {% block write_blog2 %}
 
             {% endblock %}
+            {% block login_resgist2 %}
 
-{#            <dt class="list_dt"><a href="{% url 'blog:rtfedit' %}">写博客</a></dt>#}
-{#            <dd class="list_dd">#}
-{#                <ul>#}
-{#                    <li><a href="life.html">日记</a></li>#}
-{#                    <li><a href="life.html">欣赏</a></li>#}
-{#                    <li><a href="life.html">程序人生</a></li>#}
-{#                    <li><a href="life.html">经典语录</a></li>#}
-{#                </ul>#}
-{#            </dd>#}
+            {% endblock %}
 
-{#            <dt class="list_dt"><a href="{% url 'blog:gbook' %}">留言</a></dt>#}
-            <dt class="list_dt"><a href="{% url 'blog:login' %}">登录</a></dt>
-            <dt class="list_dt"><a href="{% url 'blog:regist' %}">注册</a></dt>
         </dl>
     </div>
     <!--mnav end-->
@@ -154,10 +158,17 @@
 
 {% endblock %}
 
+{% block personal %}
+
+{% endblock %}
+
 {% block scrapt %}
 
 {% endblock %}
 
-
+<footer>
+    <p>Design by <a href="http://www.yangqq.com" target="_blank">张超个人博客</a> <a href="/">豫ICP备19002993号</a></p>
+</footer>
+<a href="#" class="cd-top">Top</a>
 </body>
 </html>
