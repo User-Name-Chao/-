@@ -56,7 +56,7 @@ def collects(request):
 
 def index(request,num='1'):
     datas = {
-        'title': '主页',
+        'title': 'Jenkins测试',
     }
     kinds=classify.objects.all()
     userid = request.session.get('user_id')
